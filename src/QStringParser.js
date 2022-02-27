@@ -2,6 +2,11 @@ import XRegExp from "xregexp";
 import lodash from "lodash";
 
 export default class QStringParser {
+
+    constructor(options) {
+        this.columns = options.columns || [];
+        this.allowGlobalSearch = options.allowGlobalSearch || false;
+    }
     /**
      * Convierte un string 'key:value' en array de objetos con las siguientes opciones:
      * 
@@ -37,12 +42,29 @@ export default class QStringParser {
     }
 
 
+    /**
+     * Extrae los bloques entre parentesis (solo un nivel).
+     * 
+     * @param {*} str 
+     * @returns 
+     */
     splitPatentheses = (str) => {
         const test = XRegExp.matchRecursive(str, '\\(', '\\)', 'g');
         return test;
     }
 
 
+    /**
+     * Aplica una expresión regular para extraer los parámetros de búsqueda:
+     * - key: columna
+     * - operator: operador búsqueda
+     * - value: valor a buscar
+     * - logic: operador logico a utilizar
+     * - plain: parametro plano adicional (ejemplo +test o -asdfasdf). Necesario activar allowGlobalSearch
+     * @param {*} str 
+     * @param {*} subgroups 
+     * @returns 
+     */
     parseQS = (str, subgroups) => {
         // const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<plain>[\+|-]?[^\s]+|)? ?(?<logic>OR|AND)? ?/gm; // clave:valor clave2!:valor2
         const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<logic>OR|AND)? ?(?<plain>[\+|-|\(#][^\s]+|)? ?/gm; // clave:valor clave2!:valor2
