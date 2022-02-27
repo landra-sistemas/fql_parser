@@ -1,3 +1,3 @@
-import { parseQS, splitPatentheses } from "./parser";
+import QStringParser from "./QStringParser";
 
-export { parseQS, splitPatentheses };
+export { QStringParser };
