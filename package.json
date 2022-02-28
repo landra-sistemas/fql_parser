@@ -15,12 +15,12 @@
     },
     "source": "src/index.js",
     "exports": {
-        "require": "./dist/foo.cjs",
-        "default": "./dist/foo.modern.js"
+        "require": "./dist/parser.cjs",
+        "default": "./dist/parser.modern.js"
     },
-    "main": "./dist/foo.cjs",
-    "module": "./dist/foo.module.js",
-    "unpkg": "./dist/foo.umd.js",
+    "main": "./dist/parser.cjs",
+    "module": "./dist/parser.module.js",
+    "unpkg": "./dist/parser.umd.js",
     "scripts": {
         "build": "microbundle",
         "dev": "microbundle watch"

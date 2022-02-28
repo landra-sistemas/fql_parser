@@ -4,8 +4,8 @@ import lodash from "lodash";
 export default class QStringParser {
 
     constructor(options) {
-        this.columns = options.columns || [];
-        this.allowGlobalSearch = options.allowGlobalSearch || false;
+        this.columns = (options && options.columns) || [];
+        this.allowGlobalSearch = (options && options.allowGlobalSearch) || false;
     }
     /**
      * Convierte un string 'key:value' en array de objetos con las siguientes opciones:
@@ -66,8 +66,7 @@ export default class QStringParser {
      * @returns 
      */
     parseQS = (str, subgroups) => {
-        // const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<plain>[\+|-]?[^\s]+|)? ?(?<logic>OR|AND)? ?/gm; // clave:valor clave2!:valor2
-        const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<logic>OR|AND)? ?(?<plain>[\+|-|\(#][^\s]+|)? ?/gm; // clave:valor clave2!:valor2
+        const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<logic>OR|AND)? ?(?<plain>[\+|\-|\(#][^\s]+|)? ?/gm; // clave:valor clave2!:valor2
         let m;
 
         let data = [];
@@ -113,6 +112,16 @@ export default class QStringParser {
             if (plain && plain.indexOf('#') !== -1) {
                 const index = plain.replace(/#|\(|\)/g, '');
                 data.push(subgroups[parseInt(index)]);
+            } else if (this.allowGlobalSearch && plain && plain.indexOf('#') === -1) {
+                let op = "plain_+";
+                if (plain.startsWith('-')) {
+                    op = "plain_-";
+                }
+                data.push({
+                    operator: op,
+                    value: plain.replace(/\+|\-/gm, ''),
+                    logic: logic || "AND"
+                });
             }
         }
         return data;

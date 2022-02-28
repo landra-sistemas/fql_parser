@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "outputCapture": "std",
-            "program": "${workspaceFolder}\\dist\\foo.modern.js"
+            "program": "${workspaceFolder}\\dist\\parser.modern.js"
         }
     ]
 }
