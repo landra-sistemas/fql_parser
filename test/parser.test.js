@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { QStringParser } from '../src'
+import { QStringParser } from '../src/index.mjs'
 
 describe('parser', () => {
     describe('Basic operation: parsing', () => {
