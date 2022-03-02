@@ -1,7 +1,7 @@
 import XRegExp from "xregexp";
 import lodash from "lodash";
 
-export default class QStringParser {
+export default class FQLParser {
 
     constructor(options) {
         this.columns = (options && options.columns) || [];

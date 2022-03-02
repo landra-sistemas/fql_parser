@@ -1,3 +1,3 @@
-import QStringParser from "./QStringParser.mjs";
+import FQLParser from "./FQLParser.mjs";
 
-export { QStringParser };
+export { FQLParser };

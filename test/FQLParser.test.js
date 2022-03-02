@@ -1,32 +1,36 @@
 import { expect } from 'chai'
-import { QStringParser } from '../src/index.mjs'
+import { FQLParser } from '../src/index.mjs'
 
-describe('parser', () => {
+describe('FQLParser', () => {
     describe('Basic operation: parsing', () => {
 
         it('Parse: OR logic', () => {
 
-            const parser = new QStringParser();
+            const parser = new FQLParser();
 
             const data = parser.parse("test:value OR (asdfasdf:fdfdsfd)")
 
-            console.log(data);
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(2);
 
         })
 
         it('Parse: recursively parses queries', () => {
 
-            const parser = new QStringParser();
+            const parser = new FQLParser();
 
             const data = parser.parse("test:value (asdfasdf:fdfdsfd)")
 
-            console.log(data);
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(2);
 
         })
 
         it('Parse: Complex recursive parsing (no globalSearch)', () => {
 
-            const parser = new QStringParser();
+            const parser = new FQLParser();
 
             const data = parser.parse("test:value (asdfasdf:fdfdsfd AND (test:test OR a!:b)) +test")
 
@@ -39,7 +43,7 @@ describe('parser', () => {
 
         it('Parse: Complex recursive parsing (with globalSearch)', () => {
 
-            const parser = new QStringParser({ allowGlobalSearch: true });
+            const parser = new FQLParser({ allowGlobalSearch: true });
 
             const data = parser.parse("test:value (asdfasdf:fdfdsfd AND (test:test OR a!:b)) -test")
 
@@ -53,7 +57,7 @@ describe('parser', () => {
     describe('Utils', () => {
         it('Split Parentheses', () => {
 
-            const parser = new QStringParser();
+            const parser = new FQLParser();
             const data = parser.splitPatentheses("(test:asdf ) AND (+asdfasdf) asdfasdfasdf asdfasdf (fdfdfd (fdsaf (adfasdf )))")
 
             console.log(data)
@@ -65,7 +69,7 @@ describe('parser', () => {
         })
         it('ParseQS: Apply regex on simple query', () => {
 
-            const parser = new QStringParser();
+            const parser = new FQLParser();
 
             const data = parser.parseQS("test:value")
 
