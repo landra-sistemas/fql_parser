@@ -66,7 +66,7 @@ export default class FQLParser {
      * @returns 
      */
     parseQS = (str, subgroups) => {
-        const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"]+|".*?"))? ?(?<logic>OR|AND)? ?(?<plain>[\+|\-|\(#][^\s]+|)? ?/gm; // clave:valor clave2!:valor2
+        const regex = /((?<key>[^\s|^:|^!:|^>:|^<:]+)(?<operator>:|!:|>:|<:)(?<value>[^\s|"|\[]+|".*?"|\[.*?\]))? ?(?<logic>OR|AND)? ?(?<plain>[\+|\-|\(#][^\s]+|)? ?/gm;
         let m;
 
         let data = [];
@@ -100,6 +100,14 @@ export default class FQLParser {
                     type = "<";
                     break;
             }
+            //Los corchetes marcan rangos con lo que si se detecta se cambia el tipo LIKE a BETWEEN
+            if (value && value.match(/\[.*?\]/)) {
+                type = type === 'NOT LIKE' ? "NOT BETWEEN" : "BETWEEN";
+            }
+            //Las comas implican varios valores con lo que si se detectan se cambia el tipo LIKE a IN
+            if (value && value.indexOf(',') !== -1) {
+                type = type === 'NOT LIKE' ? "NOT IN" : "IN";
+            }
 
             if (key) {
                 data.push({
@@ -109,10 +117,12 @@ export default class FQLParser {
                     logic: logic || "AND"
                 });
             }
+            // Gestion para añadir los indices de los subgrupos
             if (plain && plain.indexOf('#') !== -1) {
                 const index = plain.replace(/#|\(|\)/g, '');
                 data.push(subgroups[parseInt(index)]);
             } else if (this.allowGlobalSearch && plain && plain.indexOf('#') === -1) {
+                // Añadir las busquedas plain en caso de estar activadas.
                 let op = "plain_+";
                 if (plain.startsWith('-')) {
                     op = "plain_-";

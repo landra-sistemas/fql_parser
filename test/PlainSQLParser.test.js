@@ -23,6 +23,23 @@ describe('PlainSQLParser', () => {
             console.log(str);
 
         })
+        it('Parse: Between', () => {
+
+            const parser = new FQLParser();
+
+            const data = parser.parse("test:[a TO z] AND test2:asdf,fdsf,asdf")
+
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(2);
+
+            const sqlparser = new PlainSQLParser();
+
+            const str = sqlparser.parse(data);
+
+            console.log(str);
+
+        })
 
     })
 

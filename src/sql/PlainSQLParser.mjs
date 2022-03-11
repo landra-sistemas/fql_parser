@@ -14,12 +14,22 @@ export class PlainSQLParser extends BaseSQLParser {
             return "";
         }
 
-        const { key, operator, value, logic } = condition;
+        let { key, operator, value, logic } = condition;
 
-        //TODO check value has [range]
         //TODO check value has ""
 
+        let binding = "?";
+        let parsedValue = [value];
 
-        return { query: `${key} ${operator} ? ${logic} `, bindings: [value] }
+        if (operator === "BETWEEN" || operator === "NOT BETWEEN") {
+            parsedValue = value.replace(/\[|\]/gm, '');
+            parsedValue = parsedValue.split(' TO ');
+            binding = "? AND ?";
+        }
+        if (operator === "IN" || operator === "NOT IN") {
+            parsedValue = [value.split(',')];
+        }
+
+        return { query: `${key} ${operator} ${binding} ${logic} `, bindings: parsedValue }
     }
 }

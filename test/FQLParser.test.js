@@ -53,6 +53,19 @@ describe('FQLParser', () => {
             expect(data).to.be.an("array");
             expect(data).to.have.lengthOf(3);
         })
+
+        it('Parse: Range', () => {
+
+            const parser = new FQLParser({ allowGlobalSearch: true });
+
+            const data = parser.parse("test:[a TO z] AND test2:asdf,fdsf,asdf")
+
+            console.log(JSON.stringify(data));
+
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(2);
+        })
     })
     describe('Utils', () => {
         it('Split Parentheses', () => {

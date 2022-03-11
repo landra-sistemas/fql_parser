@@ -13,7 +13,7 @@
     "bugs": {
         "url": "https://github.com/thorin8k/searchstring-to-sql/issues"
     },
-    "source": "src/index.js",
+    "source": "src/index.mjs",
     "exports": {
         "require": "./dist/parser.cjs",
         "default": "./dist/parser.modern.js"
