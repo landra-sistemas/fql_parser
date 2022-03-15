@@ -16,7 +16,7 @@ export class PlainSQLParser extends BaseSQLParser {
 
         let { key, operator, value, logic } = condition;
 
-        //TODO check value has ""
+        //TODO check value has "" ??
 
         let binding = "?";
         let parsedValue = [value];
