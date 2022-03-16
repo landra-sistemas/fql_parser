@@ -18,7 +18,7 @@
         "require": "./dist/parser.cjs",
         "default": "./dist/parser.modern.js"
     },
-    "main": "./dist/parser.cjs",
+    "main": "./dist/parser.js",
     "module": "./dist/parser.module.js",
     "unpkg": "./dist/parser.umd.js",
     "scripts": {
