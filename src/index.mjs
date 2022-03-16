@@ -1,4 +1,4 @@
 import FQLParser from "./FQLParser.mjs";
-import { PlainSQLParser } from "./sql/index.mjs";
+import { SQLParser, KnexParser } from "./sql/index.mjs";
 
-export { FQLParser, PlainSQLParser };
+export { FQLParser, SQLParser, KnexParser };

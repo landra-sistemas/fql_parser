@@ -1,4 +1,4 @@
-export default class BaseSQLParser {
+export default class SQLParser {
 
     /**
      * Converte una lista de condiciones generada por el FQLParser en una condición String.
@@ -32,5 +32,26 @@ export default class BaseSQLParser {
      * 
      * @param {object} condition 
      */
-    convertCondition(condition) { }
+    convertCondition(condition) {
+        if (!condition.key) {
+            console.warn('PlainSQL doest not support global searching');
+            return "";
+        }
+
+        let { key, operator, value, logic } = condition;
+
+        let binding = "?";
+        let parsedValue = [value.replaceAll('"', '')]; //Eliminar las dobles comillas
+
+        if (operator === "BETWEEN" || operator === "NOT BETWEEN") {
+            parsedValue = value.replace(/\[|\]/gm, '');
+            parsedValue = parsedValue.split(' TO ');
+            binding = "? AND ?";
+        }
+        if (operator === "IN" || operator === "NOT IN") {
+            parsedValue = [value.split(',')];
+        }
+
+        return { query: `${key} ${operator} ${binding} ${logic} `, bindings: parsedValue }
+    }
 }

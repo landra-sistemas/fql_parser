@@ -1,4 +1,4 @@
-import BaseSQLParser from "./BaseSQLParser.mjs";
-import { PlainSQLParser } from "./PlainSQLParser.mjs";
+import SQLParser from "./SQLParser.mjs";
+import KnexParser from "./KnexParser.mjs";
 
-export { BaseSQLParser, PlainSQLParser }
+export { SQLParser, KnexParser }

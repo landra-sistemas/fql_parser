@@ -1,8 +1,7 @@
 import { expect } from 'chai'
-import { FQLParser } from '../src/index.mjs'
-import { PlainSQLParser } from '../src/index.mjs'
+import { FQLParser, SQLParser } from '../src/index.mjs'
 
-describe('PlainSQLParser', () => {
+describe('SQLParser', () => {
 
     describe('Parse Simple Query', () => {
 
@@ -16,9 +15,7 @@ describe('PlainSQLParser', () => {
             expect(data).to.be.an("array");
             expect(data).to.have.lengthOf(2);
 
-            const sqlparser = new PlainSQLParser();
-
-            const str = sqlparser.parse(data);
+            const str = new SQLParser().parse(data);
 
             expect(str).to.be.an("object");
             expect(str).to.have.property("query");
@@ -37,9 +34,7 @@ describe('PlainSQLParser', () => {
             expect(data).to.be.an("array");
             expect(data).to.have.lengthOf(1);
 
-            const sqlparser = new PlainSQLParser();
-
-            const str = sqlparser.parse(data);
+            const str = new SQLParser().parse(data);
 
             expect(str).to.be.an("object");
             expect(str).to.have.property("query");
@@ -59,13 +54,31 @@ describe('PlainSQLParser', () => {
             expect(data).to.be.an("array");
             expect(data).to.have.lengthOf(1);
 
-            const sqlparser = new PlainSQLParser();
-
-            const str = sqlparser.parse(data);
+            const str = new SQLParser().parse(data);
 
             expect(str).to.be.an("object");
             expect(str).to.have.property("query");
             expect(str.query).to.contain("IN");
+
+            console.log(str);
+
+        })
+
+        it('Parse: withQuotes', () => {
+
+            const parser = new FQLParser();
+
+            const data = parser.parse('test:"query larga con espacios"')
+
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(1);
+
+            const str = new SQLParser().parse(data);
+
+            expect(str).to.be.an("object");
+            expect(str).to.have.property("query");
+            expect(str.query).to.contain("LIKE");
 
             console.log(str);
 

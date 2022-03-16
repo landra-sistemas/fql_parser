@@ -1,5 +1,15 @@
-import BaseSQLParser from "./BaseSQLParser.mjs";
+import Knex from "knex";
+import { SQLParser } from "../index.mjs";
 
-export class KnexParser extends BaseSQLParser {
-    
+export default class KnexParser extends SQLParser {
+
+    /**
+     * 
+     * @param {Knex} builder 
+     * @param {object} object 
+     */
+    toKnex(builder, object) {
+        const parsed = this.parse(object);
+        return builder.whereRaw(parsed.query, parsed.bindings);
+    }
 }
