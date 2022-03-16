@@ -148,6 +148,12 @@ export default class FQLParser {
         if (!this.aliases) {
             return key;
         }
-        return this.aliases[key] || key;
+        if (this.aliases[key]) {
+            return this.aliases[key]
+        }
+        if (this.aliases['*']) {
+            return this.aliases['*'].replaceAll("{{key}}", key);
+        }
+        return key;
     }
 }
