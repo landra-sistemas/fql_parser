@@ -1,2 +1,2 @@
-# plantilla_desarrollo
-Repositorio desde el que crear nuevos repositorios.
+# fql_parser
+Tool to convert searchstring (key:value ...) to SQL WHERE set of conditions
