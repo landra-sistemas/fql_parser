@@ -1,5 +1,10 @@
 export default class SQLParser {
 
+    constructor(table, dialect = "pg") {
+        this.table = table;
+        this.dialect = dialect;
+    }
+
     /**
      * Converte una lista de condiciones generada por el FQLParser en una condición String.
      * 
@@ -34,8 +39,16 @@ export default class SQLParser {
      */
     convertCondition(condition) {
         if (!condition.key) {
-            console.warn('PlainSQL doest not support global searching');
-            return "";
+            if (this.dialect !== "pg") {
+                console.warn('Only PostgreSQL supports global searching');
+                return "";
+            }
+
+            let op = "";
+            if (condition.operator === "plain_-") {
+                op = "NOT";
+            }
+            return { query: `${op} to_tsvector(?::text) @@ to_tsquery(?) ${logic}`, bindings: [this.table, value] }
         }
 
         let { key, operator, value, logic } = condition;
