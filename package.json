@@ -1,17 +1,17 @@
 {
-    "name": "searchstring-to-sql",
+    "name": "fql_parser",
     "version": "0.0.1",
     "license": "MIT",
     "author": {
-        "name": "thorin8k",
-        "url": "https://github.com/thorin8k"
+        "name": "landra-sistemas",
+        "url": "https://github.com/landra-sistemas"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/thorin8k/searchstring-to-sql.git"
+        "url": "https://github.com/landra-sistemas/fql_parser.git"
     },
     "bugs": {
-        "url": "https://github.com/thorin8k/searchstring-to-sql/issues"
+        "url": "https://github.com/landra-sistemas/fql_parser/issues"
     },
     "source": "src/index.mjs",
     "exports": {
