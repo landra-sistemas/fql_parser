@@ -4,7 +4,7 @@ import lodash from "lodash";
 export default class FQLParser {
 
     constructor(options) {
-        this.columns = (options && options.columns) || [];
+        this.aliases = (options && options.aliases) || {};
         this.allowGlobalSearch = (options && options.allowGlobalSearch) || false;
     }
     /**
@@ -111,7 +111,7 @@ export default class FQLParser {
 
             if (key) {
                 data.push({
-                    key: key,
+                    key: this.checkAliases(key),
                     operator: type,
                     value: value,
                     logic: logic || "AND"
@@ -135,5 +135,19 @@ export default class FQLParser {
             }
         }
         return data;
+    }
+
+
+
+    /**
+     * 
+     * @param key 
+     * @returns 
+     */
+    checkAliases(key) {
+        if (!this.aliases) {
+            return key;
+        }
+        return this.aliases[key] || key;
     }
 }

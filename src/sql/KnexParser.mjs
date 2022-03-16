@@ -1,4 +1,3 @@
-import Knex from "knex";
 import SQLParser from "./SQLParser.mjs";
 
 export default class KnexParser extends SQLParser {

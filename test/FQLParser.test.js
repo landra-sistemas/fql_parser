@@ -66,6 +66,21 @@ describe('FQLParser', () => {
             expect(data).to.be.an("array");
             expect(data).to.have.lengthOf(2);
         })
+
+        it('Parse: Aliases', () => {
+
+            const parser = new FQLParser({ aliases: { test: "lalala" }, allowGlobalSearch: true });
+
+            const data = parser.parse("test:[a TO z] AND test2:asdf,fdsf,asdf")
+
+            console.log(JSON.stringify(data));
+
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(2);
+            expect(data[0]).to.have.property("key");
+            expect(data[0].key).to.be.eq("lalala");
+        })
     })
     describe('Utils', () => {
         it('Split Parentheses', () => {
