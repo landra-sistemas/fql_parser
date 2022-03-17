@@ -155,7 +155,7 @@ export default class FQLParser {
             return key;
         }
         if (this.aliases[key]) {
-            return this.aliases[key]
+            return this.aliases[key].replaceAll("{{key}}", key);
         }
         if (this.aliases['*']) {
             return this.aliases['*'].replaceAll("{{key}}", key);
