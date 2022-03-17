@@ -84,6 +84,26 @@ describe('SQLParser', () => {
 
         })
 
+        it('Parse: fulltext', () => {
+
+            const parser = new FQLParser({ allowGlobalSearch: true });
+
+            const data = parser.parse('+testing')
+
+            expect(data).not.to.be.null;
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(1);
+
+            const str = new SQLParser("table").parse(data);
+
+            expect(str).to.be.an("object");
+            expect(str).to.have.property("query");
+            expect(str.query).to.contain("vector");
+
+            console.log(str);
+
+        })
+
     })
 
 })

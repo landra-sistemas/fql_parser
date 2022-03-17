@@ -38,23 +38,23 @@ export default class SQLParser {
      * @param {object} condition 
      */
     convertCondition(condition) {
-        if (!condition.key) {
+        let { key, operator, value, logic } = condition;
+        if (!key) {
             if (this.dialect !== "pg") {
                 console.warn('Only PostgreSQL supports global searching');
                 return "";
             }
 
             let op = "";
-            if (condition.operator === "plain_-") {
+            if (operator === "plain_-") {
                 op = "NOT";
             }
-            return { query: `${op} to_tsvector(?::text) @@ to_tsquery(?) ${logic}`, bindings: [this.table, value] }
+            return { query: `${op} to_tsvector(${this.table}::text) @@ to_tsquery(?) ${logic} `, bindings: [value] }
         }
 
-        let { key, operator, value, logic } = condition;
 
         let binding = "?";
-        let parsedValue = [value.replaceAll('"', '')]; //Eliminar las dobles comillas
+        let parsedValue = [value]; //Eliminar las dobles comillas
 
         if (operator === "BETWEEN" || operator === "NOT BETWEEN") {
             parsedValue = value.replace(/\[|\]/gm, '');
@@ -67,4 +67,6 @@ export default class SQLParser {
 
         return { query: `${key} ${operator} ${binding} ${logic} `, bindings: parsedValue }
     }
+
+
 }

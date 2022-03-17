@@ -3,9 +3,15 @@ import lodash from "lodash";
 
 export default class FQLParser {
 
+    LIKE = "LIKE";
+
     constructor(options) {
         this.aliases = (options && options.aliases) || {};
         this.allowGlobalSearch = (options && options.allowGlobalSearch) || false;
+
+        if (options && options.caseInsensitive) {
+            this.LIKE = "ILIKE";
+        }
     }
     /**
      * Convierte un string 'key:value' en array de objetos con las siguientes opciones:
@@ -35,7 +41,7 @@ export default class FQLParser {
             }
 
         }
-        console.log(workStr);
+        // console.log(workStr);
 
         return this.parseQS(workStr, parsedElm);
 
@@ -84,14 +90,14 @@ export default class FQLParser {
                 operator = ":";
             }
 
-            let type = "LIKE";
+            let type = this.LIKE;
             switch (operator) {
                 case ":":
                 default:
-                    type = "LIKE";
+                    type = this.LIKE;
                     break;
                 case "!:":
-                    type = "NOT LIKE";
+                    type = `NOT ${this.LIKE}`;
                     break;
                 case ">:":
                     type = ">";
@@ -102,18 +108,18 @@ export default class FQLParser {
             }
             //Los corchetes marcan rangos con lo que si se detecta se cambia el tipo LIKE a BETWEEN
             if (value && value.match(/\[.*?\]/)) {
-                type = type === 'NOT LIKE' ? "NOT BETWEEN" : "BETWEEN";
+                type = type === `NOT ${this.LIKE}` ? "NOT BETWEEN" : "BETWEEN";
             }
             //Las comas implican varios valores con lo que si se detectan se cambia el tipo LIKE a IN
             if (value && value.indexOf(',') !== -1) {
-                type = type === 'NOT LIKE' ? "NOT IN" : "IN";
+                type = type === `NOT ${this.LIKE}` ? "NOT IN" : "IN";
             }
 
             if (key) {
                 data.push({
                     key: this.checkAliases(key),
                     operator: type,
-                    value: value,
+                    value: this.parseValue(value),
                     logic: logic || "AND"
                 });
             }
@@ -129,7 +135,7 @@ export default class FQLParser {
                 }
                 data.push({
                     operator: op,
-                    value: plain.replace(/\+|\-/gm, ''),
+                    value: this.parseValue(plain.replace(/\+|\-/gm, '')),
                     logic: logic || "AND"
                 });
             }
@@ -155,5 +161,15 @@ export default class FQLParser {
             return this.aliases['*'].replaceAll("{{key}}", key);
         }
         return key;
+    }
+
+    /**
+     * 
+     * @param value 
+     * @returns 
+     */
+    parseValue(value) {
+        //TODO improve
+        return value.replaceAll(/"|\?/g, '').replaceAll('*', '%');
     }
 }
