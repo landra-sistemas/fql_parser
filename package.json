@@ -1,6 +1,6 @@
 {
-    "name": "fql_parser",
-    "version": "0.0.1",
+    "name": "@landra_sistemas/fql-parser",
+    "version": "0.0.2",
     "license": "MIT",
     "author": {
         "name": "landra-sistemas",
@@ -18,17 +18,20 @@
         "require": "./dist/parser.cjs",
         "default": "./dist/parser.modern.js"
     },
-    "main": "./dist/parser.js",
-    "module": "./dist/parser.module.js",
+    "type": "module",
+    "main": "./dist/parser.cjs",
+    "module": "./dist/parser.esm.js",
     "unpkg": "./dist/parser.umd.js",
     "scripts": {
         "build": "microbundle",
-        "dev": "microbundle watch"
+        "dev": "microbundle watch",
+        "clean": "rimraf node_modules"
     },
     "devDependencies": {
         "chai": "^4.3.6",
         "microbundle": "^0.14.2",
-        "mocha": "^9.2.1"
+        "mocha": "^9.2.1",
+        "rimraf": "^3.0.2"
     },
     "peerDependencies": {
         "knex": "^1.0.4"
@@ -39,7 +42,6 @@
         }
     },
     "dependencies": {
-        "esm": "^3.2.25",
         "lodash": "^4.17.21",
         "xregexp": "^5.1.0"
     }
