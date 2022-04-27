@@ -1,6 +1,6 @@
 {
     "name": "@landra_sistemas/fql-parser",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "license": "MIT",
     "author": {
         "name": "landra-sistemas",
@@ -27,11 +27,9 @@
         "dev": "microbundle watch",
         "test": "c8 --reporter=lcov mocha test --exit",
         "clean": "rimraf node_modules",
-        
         "preversion": "npm install && npm test -- --watchAll=false",
         "version": "echo ${npm_package_version} && npm run build && git add -A",
         "postversion": "git push --follow-tags && npm publish --access public",
-        
         "release:patch": "npm version patch -m \"Bump version %s\"",
         "release:minor": "npm version minor -m \"Bump version %s\"",
         "release:major": "npm version major -m \"Bump version %s\"",
