@@ -28,7 +28,7 @@
         "test": "c8 --reporter=lcov mocha test --exit",
         "clean": "rimraf node_modules",
         "preversion": "npm install && npm test -- --watchAll=false",
-        "version": "echo ${npm_package_version} && npm run build && git add -A",
+        "version": "npm run build && git add -A",
         "postversion": "git push --follow-tags && npm publish --access public",
         "release:patch": "npm version patch -m \"Bump version %s\"",
         "release:minor": "npm version minor -m \"Bump version %s\"",
