@@ -38,15 +38,15 @@
         "release:rc": "npm version prerelease --preid=rc -m \"Bump version %s\""
     },
     "devDependencies": {
-        "c8": "^7.11.2",
-        "chai": "^4.3.6",
-        "knex": "^1.0.6",
-        "microbundle": "^0.14.2",
-        "mocha": "^9.2.1",
+        "c8": "^7.12.0",
+        "chai": "^4.3.7",
+        "knex": "^2.3.0",
+        "microbundle": "^0.15.1",
+        "mocha": "^10.2.0",
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
-        "knex": "^1.0.4"
+        "knex": "^2.1.0"
     },
     "peerDependenciesMeta": {
         "knex": {
@@ -55,6 +55,6 @@
     },
     "dependencies": {
         "lodash": "^4.17.21",
-        "xregexp": "^5.1.0"
+        "xregexp": "^5.1.1"
     }
 }
