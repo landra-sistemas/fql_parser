@@ -40,7 +40,7 @@
     "devDependencies": {
         "c8": "^7.12.0",
         "chai": "^4.3.7",
-        "knex": "^2.3.0",
+        "knex": "^2.4.0",
         "microbundle": "^0.15.1",
         "mocha": "^10.2.0",
         "rimraf": "^3.0.2"
