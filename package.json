@@ -46,7 +46,7 @@
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
-        "knex": "^2.1.0"
+        "knex": "^2.2.0"
     },
     "peerDependenciesMeta": {
         "knex": {

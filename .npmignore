@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+logs/
+temp/
+i18n/
+src/
+coverage/
+.mocharc.json
+.prettierrc
+.history
+.nyc_output
+.github
+test
