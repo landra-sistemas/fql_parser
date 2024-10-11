@@ -179,6 +179,8 @@ export default class FQLParser {
      */
     parseValueForPlainQuery(value) {
         //TODO improve
-        return value.replaceAll(/"|\?/g, '').replaceAll('*', ':*');
+
+        const wildcard = value.includes("*") ? ":*" : "";
+        return value.replaceAll(/"|\?/g, '').replaceAll('*', wildcard);
     }
 }
