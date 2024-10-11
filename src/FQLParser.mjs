@@ -135,7 +135,7 @@ export default class FQLParser {
                 }
                 data.push({
                     operator: op,
-                    value: this.parseValue(plain.replace(/\+|\-/gm, '')),
+                    value: this.parseValueForPlainQuery(plain.replace(/\+|\-/gm, '')),
                     logic: logic || "AND"
                 });
             }
@@ -171,5 +171,14 @@ export default class FQLParser {
     parseValue(value) {
         //TODO improve
         return value.replaceAll(/"|\?/g, '').replaceAll('*', '%');
+    }
+    /**
+     * 
+     * @param value 
+     * @returns 
+     */
+    parseValueForPlainQuery(value) {
+        //TODO improve
+        return value.replaceAll(/"|\?/g, '').replaceAll('*', ':*');
     }
 }
