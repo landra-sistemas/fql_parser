@@ -107,7 +107,7 @@ export default class FQLParser {
                     break;
             }
             //Los corchetes marcan rangos con lo que si se detecta se cambia el tipo LIKE a BETWEEN
-            if (value && value.match(/\[.*?\]/)) {
+            if (value && value.match(/\[.*?TO.*?\]/)) {
                 type = type === `NOT ${this.LIKE}` ? "NOT BETWEEN" : "BETWEEN";
             }
             //Las comas implican varios valores con lo que si se detectan se cambia el tipo LIKE a IN

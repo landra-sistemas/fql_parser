@@ -69,9 +69,9 @@ describe('FQLParser', () => {
 
         it('Parse: Aliases', () => {
 
-            const parser = new FQLParser({ aliases: { test: "lalala" }, allowGlobalSearch: true });
+            const parser = new FQLParser({ aliases: { test: "lalala", test2: "any({{key}})" }, allowGlobalSearch: true });
 
-            const data = parser.parse("test:[a TO z] AND test2:asdf,fdsf,asdf")
+            const data = parser.parse("test:[a TO z] AND test2:asdf")
 
             console.log(JSON.stringify(data));
 
