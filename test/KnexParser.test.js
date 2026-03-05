@@ -102,7 +102,7 @@ describe("KnexParser", () => {
       expect(data).to.be.an("array");
       expect(data).to.have.lengthOf(1);
 
-      const str = new KnexParser().toKnex(knex, data);
+      const str = new KnexParser("table").toKnex(knex, data);
 
       console.log(str.toSQL());
       expect(str.toSQL()).to.be.an("object");

@@ -19,12 +19,19 @@
         "default": "./dist/parser.modern.js"
     },
     "type": "module",
+    "engines": {
+        "node": ">=16.0.0"
+    },
     "main": "./dist/parser.cjs",
     "module": "./dist/parser.esm.js",
     "unpkg": "./dist/parser.umd.js",
     "scripts": {
         "build": "microbundle",
         "dev": "microbundle watch",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "test": "c8 --reporter=lcov mocha test --exit",
         "clean": "rimraf node_modules",
         "preversion": "npm install && npm test -- --watchAll=false",
@@ -38,12 +45,15 @@
         "release:rc": "npm version prerelease --preid=rc -m \"Bump version %s\""
     },
     "devDependencies": {
-        "c8": "^8.0.1",
-        "chai": "^4.3.10",
+        "c8": "^11.0.0",
+        "chai": "^6.2.2",
+        "eslint": "^10.0.2",
+        "eslint-config-prettier": "^10.1.8",
         "knex": "^3.1.0",
         "microbundle": "^0.15.1",
-        "mocha": "^10.2.0",
-        "rimraf": "^5.0.5"
+        "mocha": "^11.7.5",
+        "prettier": "^3.2.5",
+        "rimraf": "^6.1.3"
     },
     "peerDependencies": {
         "knex": "^3.1.0"
@@ -54,7 +64,6 @@
         }
     },
     "dependencies": {
-        "lodash": "^4.17.21",
         "xregexp": "^5.1.1"
     }
 }
