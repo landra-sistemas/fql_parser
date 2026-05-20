@@ -1,6 +1,6 @@
 {
     "name": "@landra_sistemas/fql-parser",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "license": "MIT",
     "author": {
         "name": "landra-sistemas",
@@ -63,6 +63,5 @@
             "optional": true
         }
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }
