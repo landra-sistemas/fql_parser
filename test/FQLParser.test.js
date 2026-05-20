@@ -134,6 +134,51 @@ describe('FQLParser', () => {
             expect(data).to.have.lengthOf(3);
 
         })
+
+        it('Split Parentheses: extracts nested groups preserving inner parentheses', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("(a AND (b OR c))");
+
+            expect(data).to.deep.equal(['a AND (b OR c)']);
+        })
+
+        it('Split Parentheses: returns empty array when no parentheses', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("test:value AND other:thing");
+
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(0);
+        })
+
+        it('Split Parentheses: handles multiple sibling groups', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("(a:1) AND (b:2) OR (c:3)");
+
+            expect(data).to.deep.equal(['a:1', 'b:2', 'c:3']);
+        })
+
+        it('Split Parentheses: handles deeply nested parentheses', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("(a AND (b AND (c AND (d))))");
+
+            expect(data).to.have.lengthOf(1);
+            expect(data[0]).to.equal('a AND (b AND (c AND (d)))');
+        })
+
+        it('Split Parentheses: ignores unbalanced opening parentheses', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("(a:1 AND (b:2)");
+
+            expect(data).to.be.an("array");
+            expect(data).to.have.lengthOf(0);
+        })
+
+        it('Split Parentheses: handles empty parentheses', () => {
+            const parser = new FQLParser();
+            const data = parser.splitParentheses("() AND (a:1)");
+
+            expect(data).to.deep.equal(['', 'a:1']);
+        })
         it('ParseQS: Apply regex on simple query', () => {
 
             const parser = new FQLParser();

@@ -1,4 +1,3 @@
-import XRegExp from "xregexp";
 import { LOGICAL_OPERATORS, QUERY_OPERATORS, SPECIAL_OPERATORS, SQL_OPERATORS } from "./constants/Operators.mjs";
 import isEmpty from "./utils/isEmpty.mjs";
 
@@ -178,8 +177,21 @@ export default class FQLParser {
      * // ['b OR c', 'd AND e']
      */
     splitParentheses = (str) => {
-        const test = XRegExp.matchRecursive(str, '\\(', '\\)', 'g');
-        return test;
+        const results = [];
+        let depth = 0;
+        let start = -1;
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === '(') {
+                if (depth === 0) start = i;
+                depth++;
+            } else if (str[i] === ')') {
+                depth--;
+                if (depth === 0 && start !== -1) {
+                    results.push(str.substring(start + 1, i));
+                }
+            }
+        }
+        return results;
     }
 
 
